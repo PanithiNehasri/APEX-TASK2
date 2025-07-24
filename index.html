@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task 2 - Intermediate Web</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: #f4f8fb;
+      color: #333;
+    }
+    header {
+      background: #1e90ff;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    main {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      padding: 2rem;
+    }
+    form, .todo-section {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+    input, button, textarea {
+      width: 100%;
+      padding: 0.7rem;
+      margin: 0.5rem 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+    button {
+      background: #1e90ff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #156ac9;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      background: #e8f0fe;
+      padding: 0.5rem 1rem;
+      margin: 0.4rem 0;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .grid {
+      display: flex;
+      flex-direction: column;
+    }
+    @media (max-width: 768px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Intermediate HTML, CSS, and JavaScript Task</h1>
+  </header>
+
+  <main>
+    <!-- Contact Form -->
+    <form id="contactForm">
+      <h2>Contact Form</h2>
+      <input type="text" id="name" placeholder="Your Name" required />
+      <input type="email" id="email" placeholder="Your Email" required />
+      <textarea id="message" placeholder="Your Message" required></textarea>
+      <button type="submit">Submit</button>
+    </form>
+
+    <!-- To-Do List -->
+    <div class="todo-section">
+      <h2>Dynamic To-Do List</h2>
+      <input type="text" id="taskInput" placeholder="New Task" />
+      <button onclick="addTask()">Add Task</button>
+      <ul id="taskList"></ul>
+    </div>
+  </main>
+
+  <script>
+    // JavaScript Form Validation
+    document.getElementById("contactForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const email = document.getElementById("email").value;
+      const name = document.getElementById("name").value;
+      const message = document.getElementById("message").value;
+
+      if (!name || !email || !message) {
+        alert("All fields are required.");
+        return;
+      }
+
+      const emailRegex = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+      if (!emailRegex.test(email)) {
+        alert("Enter a valid email address.");
+        return;
+      }
+
+      alert("Form submitted successfully!");
+      this.reset();
+    });
+
+    // Dynamic To-Do List
+    function addTask() {
+      const taskInput = document.getElementById("taskInput");
+      const taskList = document.getElementById("taskList");
+
+      if (taskInput.value.trim() === "") return;
+
+      const li = document.createElement("li");
+      li.textContent = taskInput.value;
+
+      const removeBtn = document.createElement("button");
+      removeBtn.textContent = "❌";
+      removeBtn.style.background = "transparent";
+      removeBtn.style.border = "none";
+      removeBtn.style.cursor = "pointer";
+      removeBtn.onclick = () => li.remove();
+
+      li.appendChild(removeBtn);
+      taskList.appendChild(li);
+      taskInput.value = "";
+    }
+  </script>
+</body>
+</html>
